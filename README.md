@@ -16,6 +16,7 @@ When you have all that set up, select all models that you want to export, go to 
 Exporting DFFs is easy as you have all your models selected already, just hit File -> Export -> DragonFF DFF (.dff), check 'Mass Export' and export your .dff files to where you want.
 
 NOTE: This scripts uses fixed scale and rotation, so if your models appears with wrong rotation or scale in-game, you need to "Apply Rotation" and/or "Apply Scale" in Blender before exporting. Sorry for that!
+
 NOTE 2: If your object have property named "prop" or "skip", the won't be exported!
 
 -------------------------------------------------------------
