@@ -17,7 +17,7 @@ Exporting DFFs is easy as you have all your models selected already, just hit Fi
 
 NOTE: This scripts uses fixed scale and rotation, so if your models appears with wrong rotation or scale in-game, you need to "Apply Rotation" and/or "Apply Scale" in Blender before exporting. Sorry for that!
 
-NOTE 2: If your object have property named "prop" or "skip", the won't be exported!
+NOTE 2: If your object have property named "prop" or "skip", it won't be exported!
 
 -------------------------------------------------------------
 
