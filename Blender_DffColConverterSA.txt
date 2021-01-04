@@ -1,0 +1,79 @@
+# GTA SA DFF <> COL Converter (for DragonFF)
+# made by: ajanhallinta
+
+import bpy
+
+# 0: Converts all .dff collections to .col objects.
+# 1: Converts all .col collections back to .dff objects.
+toDFF = 0
+
+# Custom light and color settings for all materials
+applyLightSettings = 1
+matBrightness = 235
+matLight = 235
+
+# Set model texture names here, that represents spesific collision surface.
+shortGrasses = ['grass2']
+longGrasses = ['forestground1', 'forestground']
+gravels = ['gravel2', 'gravel1', 'gravel']
+fineGrasses = ['finegrass', 'finegrass1']
+glasses = ['windows', 'windows2', 'wwindow', 'storewindow']
+asphalts = ['road1', 'concrete3']
+
+def setColSurface(mat, ob):   
+    for slot in ob.material_slots :
+        thatMaterial = slot.material
+        mat = thatMaterial
+        mat.dff.col_mat_index = 0
+        thatTexture = thatMaterial.node_tree.nodes["Image Texture"]
+        if thatTexture.image:
+            matname = thatTexture.image.name.replace(".bmp", "").replace(".png", "").replace(".PNG", "")
+            if any(matname in s for s in longGrasses):
+                mat.dff.col_mat_index = 14
+                print("long grass col set to ", ob.name)
+            if any(matname in s for s in shortGrasses):
+                mat.dff.col_mat_index = 9
+                print("short grass col set to ", ob.name)
+            if any(matname in s for s in fineGrasses):
+                mat.dff.col_mat_index = 16
+                print("fine grass col set to ", ob.name)
+            if any(matname in s for s in gravels):
+                mat.dff.col_mat_index = 6
+                print("gravel col set to ", ob.name)
+            if any(matname in s for s in glasses):
+                mat.dff.col_mat_index = 45
+                print("glass col set to ", ob.name)
+            if any(matname in s for s in asphalts):
+                mat.dff.col_mat_index = 1
+                print("asphalt col set to ", ob.name)
+
+def convertToVisualObjects():
+    for collection in bpy.data.collections:
+        collection.name = collection.name.replace(".dff","") + ".dff"
+        print(collection.name)
+        
+    for ob in scene.objects: #For all objects
+        if ob.type == 'MESH':
+            ob.dff.type = "OBJ"       
+            print(ob.name + ": " + ob.dff.type)
+
+def convertToCollisionObjects():
+    for collection in bpy.data.collections:
+        collection.name = collection.name.replace(".dff","")
+        print(collection.name)
+
+    for ob in scene.objects:
+        if ob.type == 'MESH':
+            ob.dff.type = "COL"
+            for mat in ob.data.materials:		
+                if applyLightSettings == 1: # Apply light settings
+                    mat.dff.col_brightness = matBrightness
+                    mat.dff.col_light = matLight	
+            setColMaterial(mat,ob)
+          
+scene = bpy.context.scene
+
+if toDFF is 1:
+    convertToVisualObjects()
+else:
+    convertToCollisionObjects()

@@ -1,0 +1,42 @@
+# GTA SA PROPS IPL Export
+# made by: ajanhallinta
+
+import os
+import bpy
+
+#IPL filename
+iplName = "vesantoprops"
+
+#Map export path
+path = "E:/GAMEZ/Rockstar Games/GTA San Andreas/data/maps/vesanto/"
+os.makedirs(path, exist_ok=True)
+
+#IPL settings
+lod = -1
+interior = 0
+
+print( "\n" )
+
+# Write .IPL
+with open(path + iplName + ".ipl", "w") as file: 
+    file.write("inst\n")
+    objects = [obj for obj in bpy.data.objects if "prop" in obj]
+    for obj in objects:
+        ID = int(obj['prop'])
+        name = obj.name.split('.')[0] # Remove duplicated names
+        posX = str(obj.location.x)
+        posY = str(obj.location.y)
+        posZ = str(obj.location.z)
+        rotX = obj.rotation_quaternion[1]
+        rotY = obj.rotation_quaternion[2]
+        rotZ = obj.rotation_quaternion[3]
+        
+        if "invertZ" in obj: rotZ = -rotZ # (Optional) Rotation Z Invert
+                       
+        iplString = "%s, %s, %s, %s, %s, %s, 0.0, %s, %s, %s, %s" % (ID, name, interior, posX, posY, posZ, rotX, rotY, rotZ, lod)
+        print( iplString )
+        print( "\n" )
+        
+        file.write( iplString ) 
+        file.write("\n")
+    file.write("end\n")

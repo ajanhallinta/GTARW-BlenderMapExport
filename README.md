@@ -1,10 +1,11 @@
-# GTASA-BlenderMapExport
-Simple scripts for Blender 2.8 and DragonFF -plugin to export IPL/IDE files for GTASA.
+# GTARW-BlenderMapExport
+Simple scripts for Blender 2.8 and DragonFF -plugin to export IPL/IDE files for GTASA and GTAVC.
 
-Some simple and messy scripts to <b>export IPL/IDE files from Blender to GTASA</b>. I use them with map-cleaned GTASA to make a new map from the scratch.
+Some simple and messy scripts to <b>export IPL/IDE files from Blender to GTASA/GTAVC</b>. I use them with map-cleaned GTASA/VC to make a new map from the scratch.
 These scripts are meant to use in conjuction with <b>DragonFF -plugin, made by Parik27</b> (https://github.com/Parik27/DragonFF).
 
-# BlenderScript_IplExport.txt:
+# Usage:
+# Blender_IplExport.txt:
 
 Have your map ready in Blender with .dff Collections. Open the script in Blender Text Editor and in the first lines change 'iplName' to name that you wish to use with your .ipl and .ide files (I use "vesanto"). Next there is 'lod' and 'interior' variables. I have only used -1 for 'lod' and 0 for 'interior', maybe they work with other values too (?).
 
@@ -15,13 +16,13 @@ When you have all that set up, select all models that you want to export, go to 
 
 Exporting DFFs is easy as you have all your models selected already, just hit File -> Export -> DragonFF DFF (.dff), check 'Mass Export', uncheck 'Preserve Positions' and export your .dff files to where you want.
 
-<b>NOTE:</b> This scripts uses fixed scale and rotation, so if your models appears with wrong rotation or scale in-game, you need to "Apply Rotation" and/or "Apply Scale" in Blender before exporting. Sorry for that!
+<b>NOTE:</b> This script uses fixed scale and rotation, so if your models appears with wrong rotation or scale in-game, you need to "Apply Rotation" and/or "Apply Scale" in Blender before exporting. Sorry for that!
 
 <b>NOTE 2:</b> If your object have property named "prop" or "skip", it won't be exported!
 
 -------------------------------------------------------------
 
-# BlenderScript_ColMaker.txt:
+# Blender_DffColConverter.txt:
 
 After you have exported your .ipl, .ide and .dff(s) files, you can use this script to export the same models to collision file. Open this script in Blender Text Editor and in first lines there is 'toDFF' variable. Set its value to 0 to convert .dff collections to .col collections. After that line, there is a section with arrays where you can put your texture names that will be converted to spesific collision type (NOTE: WIP). Then in Text Editor hit ALT + P, or select Edit -> Run Script and it removes ".dff" from name of the collections and set their Type to 'Collision'.
 
@@ -31,7 +32,7 @@ After that you can export your collisions from File -> Export -> DragonFF Collis
 
 -------------------------------------------------------------
 
-# BlenderScript_PropsIplExport.txt:
+# Blender_PropsIplExport.txt:
 
 Let's say that you want to use props from the game, which have .ide already defined. You can use this script to export .ipl file for them.
 

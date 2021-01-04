@@ -1,0 +1,76 @@
+# GTA VC IPL/IDE EXPORT
+# made by: ajanhallinta
+
+import os
+import bpy
+
+#IPL/IDE filename
+iplName = "vesanto"
+
+#Map export path
+path = "E:/GTAFIN/GTA Vice City/data/maps/vesanto/"
+os.makedirs(path, exist_ok=True)
+
+#IPL settings
+lod = -1
+interior = 0
+
+#IDE settings
+textureName = "vesanto" # Name of the _SINGLE_ .txd file.
+drawDistance = 300
+
+#Starting ID
+ID = 5001
+OG_ID = ID
+
+# Write .IPL
+print( "\n\n" )
+print( "Write " + iplName + "ipl:" )
+with open(path + iplName + ".ipl", "w") as file: 
+    file.write("inst\n")
+    for obj in bpy.context.selected_objects:
+        name = obj.name.split('.')[0] # Remove duplicated names
+        posX = str(obj.location.x + obj.delta_location.x)
+        posY = str(obj.location.y + obj.delta_location.y)
+        posZ = str(obj.location.z + obj.delta_location.z)
+        rotX = 0.0
+        rotY = 0.0
+        rotZ = -1.0
+                      
+        if "invertZ" in obj: rotZ = -rotZ # (Optional) Rotation Z Invert                
+                       
+        iplString = "%s, %s, %s, %s, %s, %s, 1.0, 1.0, 1.0, 0.0, %s, %s, %s" % (ID, name, interior, posX, posY, posZ, rotX, rotY, rotZ)
+        
+        if "prop" in obj or "skip" in obj:
+            print( "\n" )
+            print("skipped %s" % name)
+        else:                    
+            file.write( iplString ) 
+            file.write("\n")
+            print(iplString )
+            print( "\n" )
+            ID += 1  
+            
+    file.write("end\n")
+    
+# Write .IDE
+ID = OG_ID
+print( "\n" )
+print( "Write " + iplName + ".ide:" )
+print( "\n" )
+with open(path + iplName + ".ide", "w") as file: 
+    file.write("objs\n")
+    for obj in bpy.context.selected_objects:
+        name = obj.name.split('.')[0] # Remove duplicated names               
+        iplString = "%s, %s, %s, 1, %s, %s" % (ID, name, textureName, drawDistance, interior) #, posZ, rotX, rotY, rotZ, lod)
+        
+        if "prop" in obj or "skip" in obj:
+            print("skipped %s" % name)
+        else:                    
+            file.write( iplString ) 
+            file.write("\n")
+            print(iplName + ".ide: " + iplString )
+            ID += 1  
+            
+    file.write("end\n")
+print( "----------------------------------------------------" )
